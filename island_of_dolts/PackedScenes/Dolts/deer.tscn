@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://doj8gwni5axh7"]
+
+[ext_resource type="Script" uid="uid://dmqgp3pyjcum1" path="res://Scripts/Dolts/Deer.gd" id="1_sq3kk"]
+[ext_resource type="Texture2D" uid="uid://db6cwlr5ibxeu" path="res://Sprites/deer.png" id="2_3rtjy"]
+
+[node name="Deer" type="Node"]
+script = ExtResource("1_sq3kk")
+sprite = ExtResource("2_3rtjy")
+metadata/_custom_type_script = "uid://dmqgp3pyjcum1"

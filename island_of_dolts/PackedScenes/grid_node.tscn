@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://drsla1p0wjk5b"]
+
+[ext_resource type="Script" uid="uid://cv4d7giu4wd4u" path="res://Scripts/GridNode.gd" id="2_1rtgg"]
+[ext_resource type="Texture2D" uid="uid://df5wvqid1uoi3" path="res://Sprites/grass.png" id="2_vy1l1"]
+
+[node name="GridNode" type="Node"]
+script = ExtResource("2_1rtgg")
+groundSprite = ExtResource("2_vy1l1")

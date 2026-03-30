@@ -1,0 +1,125 @@
+[gd_scene load_steps=14 format=3 uid="uid://cg8yivshgfi7f"]
+
+[ext_resource type="Script" uid="uid://bcep4y5rb2buw" path="res://Scripts/Terminal.gd" id="1_l6pdb"]
+[ext_resource type="FontFile" uid="uid://6perapingsa6" path="res://Courier Prime Sans.ttf" id="1_qn3nj"]
+[ext_resource type="Script" uid="uid://diluwpjgbkrgb" path="res://Scripts/GridManager.gd" id="1_sy5k4"]
+[ext_resource type="PackedScene" uid="uid://drsla1p0wjk5b" path="res://PackedScenes/grid_node.tscn" id="2_j2q8x"]
+[ext_resource type="Script" uid="uid://c1a5fkeooxc2w" path="res://Scripts/VirtualViewport.gd" id="2_l6pdb"]
+[ext_resource type="Script" uid="uid://dri3nofpo8mj2" path="res://Scripts/GameManager.gd" id="3_112p8"]
+[ext_resource type="Script" uid="uid://e8tqchh6cr0v" path="res://Scripts/LineEditOverride.gd" id="3_r657h"]
+[ext_resource type="Script" uid="uid://c3r8rfakbth6o" path="res://Scripts/DoltsManager.gd" id="4_qn3nj"]
+[ext_resource type="Texture2D" uid="uid://ck0xgf6yl1wmu" path="res://Sprites/terminal_fade.png" id="4_wt6go"]
+[ext_resource type="PackedScene" uid="uid://cuyael2mplndx" path="res://PackedScenes/dolt.tscn" id="6_tda05"]
+[ext_resource type="Script" uid="uid://bvu130pw1yooa" path="res://Scripts/Commands.gd" id="10_f0urt"]
+[ext_resource type="AudioStream" uid="uid://bkv2xdxqyosik" path="res://lightningbulb-spacebar-click-keyboard-199448.mp3" id="11_wt6go"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tda05"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[node name="node" type="Node2D"]
+
+[node name="Terminal" type="CanvasLayer" parent="." node_paths=PackedStringArray("line", "keyPressSound")]
+script = ExtResource("1_l6pdb")
+line = NodePath("LineEdit")
+keyPressSound = NodePath("../KeyPress")
+
+[node name="LineEdit" type="LineEdit" parent="Terminal"]
+offset_left = 23.0
+offset_top = 989.0
+offset_right = 1895.0
+offset_bottom = 1059.0
+theme_override_constants/caret_width = 3
+theme_override_fonts/font = ExtResource("1_qn3nj")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxFlat_tda05")
+placeholder_text = "type something"
+keep_editing_on_text_submit = true
+shortcut_keys_enabled = false
+flat = true
+caret_blink = true
+script = ExtResource("3_r657h")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Terminal"]
+offset_left = 21.0
+offset_top = 15.0
+offset_right = 951.0
+offset_bottom = 974.0
+theme_override_fonts/normal_font = ExtResource("1_qn3nj")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[color=bebe79]           [island of dolts]
+
+      'new' to start a new game.
+      
+      'load [id]' to load a saved 
+                 game.
+
+
+
+
+
+
+
+
+[/color]"
+vertical_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="Terminal"]
+offset_right = 1000.0
+offset_bottom = 185.0
+texture = ExtResource("4_wt6go")
+expand_mode = 1
+
+[node name="VirtualViewport" type="CanvasLayer" parent="." node_paths=PackedStringArray("baseNode")]
+script = ExtResource("2_l6pdb")
+baseNode = NodePath("TextureRect")
+
+[node name="TextureRect" type="TextureRect" parent="VirtualViewport"]
+texture_filter = 1
+offset_left = 1006.0
+offset_top = 153.0
+offset_right = 1046.0
+offset_bottom = 193.0
+scale = Vector2(2, 2)
+
+[node name="GridManager" type="Node" parent="."]
+script = ExtResource("1_sy5k4")
+mapSize = 200
+spacing = 16
+gridNodePackedScene = ExtResource("2_j2q8x")
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("3_112p8")
+
+[node name="DoltsManager" type="Node" parent="."]
+script = ExtResource("4_qn3nj")
+doltPackedScene = ExtResource("6_tda05")
+
+[node name="GridNode" parent="." instance=ExtResource("2_j2q8x")]
+
+[node name="Commands" type="Node" parent="."]
+script = ExtResource("10_f0urt")
+
+[node name="KeyPress" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_wt6go")
+
+[connection signal="text_submitted" from="Terminal/LineEdit" to="Terminal" method="_on_line_edit_text_submitted"]

@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuyael2mplndx"]
+
+[ext_resource type="Script" uid="uid://boqsqhhia56fn" path="res://Scripts/Dolt.gd" id="1_2h0jo"]
+[ext_resource type="Texture2D" uid="uid://dvkbx4rbbt6mu" path="res://Sprites/blue_man.png" id="2_c75oi"]
+
+[node name="Player" type="Node"]
+script = ExtResource("1_2h0jo")
+sprite = ExtResource("2_c75oi")

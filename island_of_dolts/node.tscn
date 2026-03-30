@@ -1,0 +1,244 @@
+[gd_scene load_steps=25 format=3 uid="uid://cg8yivshgfi7f"]
+
+[ext_resource type="Script" uid="uid://bcep4y5rb2buw" path="res://Scripts/Terminal.gd" id="1_l6pdb"]
+[ext_resource type="FontFile" uid="uid://6perapingsa6" path="res://Courier Prime Sans.ttf" id="1_qn3nj"]
+[ext_resource type="Script" uid="uid://diluwpjgbkrgb" path="res://Scripts/GridManager.gd" id="1_sy5k4"]
+[ext_resource type="PackedScene" uid="uid://drsla1p0wjk5b" path="res://PackedScenes/grid_node.tscn" id="2_j2q8x"]
+[ext_resource type="Script" uid="uid://c1a5fkeooxc2w" path="res://Scripts/VirtualViewport.gd" id="2_l6pdb"]
+[ext_resource type="Script" uid="uid://dri3nofpo8mj2" path="res://Scripts/GameManager.gd" id="3_112p8"]
+[ext_resource type="Script" uid="uid://e8tqchh6cr0v" path="res://Scripts/LineEditOverride.gd" id="3_r657h"]
+[ext_resource type="Script" uid="uid://c3r8rfakbth6o" path="res://Scripts/DoltsManager.gd" id="4_qn3nj"]
+[ext_resource type="Texture2D" uid="uid://ck0xgf6yl1wmu" path="res://Sprites/terminal_fade.png" id="4_wt6go"]
+[ext_resource type="Script" uid="uid://lloc7tr2fdtw" path="res://Scripts/Settings.gd" id="6_oaeeq"]
+[ext_resource type="Texture2D" uid="uid://df5wvqid1uoi3" path="res://Sprites/grass.png" id="8_cmsyx"]
+[ext_resource type="Texture2D" uid="uid://c04oh2oqqxyqs" path="res://Sprites/ocean.png" id="9_feppd"]
+[ext_resource type="Script" uid="uid://bvu130pw1yooa" path="res://Scripts/Commands.gd" id="10_f0urt"]
+[ext_resource type="PackedScene" uid="uid://c8brhii4n44f3" path="res://PackedScenes/Blocks/rock.tscn" id="10_feppd"]
+[ext_resource type="PackedScene" uid="uid://dmtyk53xatw4m" path="res://PackedScenes/Blocks/tree.tscn" id="11_aeaoo"]
+[ext_resource type="AudioStream" uid="uid://bkv2xdxqyosik" path="res://Audio/keypress.mp3" id="11_wt6go"]
+[ext_resource type="Script" uid="uid://d28gb5vpempbv" path="res://Scripts/Helper.gd" id="12_436f3"]
+[ext_resource type="PackedScene" uid="uid://cuyael2mplndx" path="res://PackedScenes/Dolts/player.tscn" id="15_p1837"]
+[ext_resource type="PackedScene" uid="uid://doj8gwni5axh7" path="res://PackedScenes/Dolts/deer.tscn" id="16_qv2vy"]
+[ext_resource type="Script" uid="uid://ckxeyhbshatw6" path="res://Scripts/SaveManager.gd" id="17_sps8e"]
+[ext_resource type="Script" uid="uid://b5h2jf71x4m1n" path="res://Scripts/AudioManager.gd" id="18_bnlop"]
+[ext_resource type="AudioStream" uid="uid://igw6dbi6qyt7" path="res://Audio/rain.mp3" id="20_ey15c"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tda05"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 1, 1, 0)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_oaeeq"]
+font = ExtResource("1_qn3nj")
+font_size = 50
+
+[node name="node" type="Node2D"]
+
+[node name="Terminal" type="CanvasLayer" parent="." node_paths=PackedStringArray("line", "terminalText")]
+script = ExtResource("1_l6pdb")
+line = NodePath("LineEdit")
+terminalText = NodePath("RichTextLabel")
+
+[node name="LineEdit" type="LineEdit" parent="Terminal"]
+offset_left = 23.0
+offset_top = 989.0
+offset_right = 1895.0
+offset_bottom = 1059.0
+theme_override_constants/caret_width = 3
+theme_override_fonts/font = ExtResource("1_qn3nj")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/focus = SubResource("StyleBoxFlat_tda05")
+placeholder_text = "type something"
+keep_editing_on_text_submit = true
+shortcut_keys_enabled = false
+flat = true
+caret_blink = true
+script = ExtResource("3_r657h")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Terminal"]
+offset_left = 21.0
+offset_top = 15.0
+offset_right = 951.0
+offset_bottom = 974.0
+theme_override_fonts/normal_font = ExtResource("1_qn3nj")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[color=bebe79]          =[Island of Dolts]=
+
+      'new' to start a new game.   
+
+    'load [save number]' to load a 
+              saved game.[/color]
+
+
+
+
+
+
+
+"
+scroll_following = true
+vertical_alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="Terminal"]
+modulate = Color(0.16470589, 0.2, 0.22745098, 1)
+offset_right = 1000.0
+offset_bottom = 185.0
+texture = ExtResource("4_wt6go")
+expand_mode = 1
+
+[node name="VirtualViewport" type="CanvasLayer" parent="." node_paths=PackedStringArray("baseNode")]
+script = ExtResource("2_l6pdb")
+baseNode = NodePath("TextureRect")
+
+[node name="TextureRect" type="TextureRect" parent="VirtualViewport"]
+texture_filter = 1
+offset_left = 1006.0
+offset_top = 153.0
+offset_right = 1046.0
+offset_bottom = 193.0
+scale = Vector2(2, 2)
+
+[node name="Settings" type="CanvasLayer" parent="."]
+script = ExtResource("6_oaeeq")
+
+[node name="base" type="Control" parent="Settings"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Settings/base"]
+layout_mode = 0
+offset_left = -12.0
+offset_top = -17.0
+offset_right = 1938.0
+offset_bottom = 1099.0
+color = Color(0.16470589, 0.2, 0.22745098, 1)
+
+[node name="AudioControl" type="Control" parent="Settings/base"]
+anchors_preset = 0
+offset_left = 100.0
+offset_top = 100.0
+offset_right = 140.0
+offset_bottom = 140.0
+
+[node name="master_label" type="Label" parent="Settings/base/AudioControl"]
+layout_mode = 0
+offset_right = 548.0
+offset_bottom = 51.0
+text = "Master"
+label_settings = SubResource("LabelSettings_oaeeq")
+
+[node name="master" type="HSlider" parent="Settings/base/AudioControl"]
+layout_mode = 0
+offset_top = 68.0
+offset_right = 548.0
+offset_bottom = 84.0
+max_value = 1.0
+step = 0.01
+
+[node name="AudioControl2" type="Control" parent="Settings/base"]
+anchors_preset = 0
+offset_left = 100.0
+offset_top = 300.0
+offset_right = 140.0
+offset_bottom = 340.0
+
+[node name="music_label" type="Label" parent="Settings/base/AudioControl2"]
+layout_mode = 0
+offset_right = 548.0
+offset_bottom = 51.0
+text = "Music"
+label_settings = SubResource("LabelSettings_oaeeq")
+
+[node name="music" type="HSlider" parent="Settings/base/AudioControl2"]
+layout_mode = 0
+offset_top = 68.0
+offset_right = 548.0
+offset_bottom = 84.0
+max_value = 1.0
+step = 0.01
+
+[node name="AudioControl3" type="Control" parent="Settings/base"]
+anchors_preset = 0
+offset_left = 100.0
+offset_top = 500.0
+offset_right = 140.0
+offset_bottom = 540.0
+
+[node name="sfx_label" type="Label" parent="Settings/base/AudioControl3"]
+layout_mode = 0
+offset_right = 548.0
+offset_bottom = 51.0
+text = "SFX"
+label_settings = SubResource("LabelSettings_oaeeq")
+
+[node name="sfx" type="HSlider" parent="Settings/base/AudioControl3"]
+layout_mode = 0
+offset_top = 68.0
+offset_right = 548.0
+offset_bottom = 84.0
+max_value = 1.0
+step = 0.01
+
+[node name="GridManager" type="Node" parent="."]
+script = ExtResource("1_sy5k4")
+mapSize = 200
+spacing = 16
+gridNodePackedScene = ExtResource("2_j2q8x")
+groundSprites = Array[Texture2D]([ExtResource("8_cmsyx"), ExtResource("9_feppd")])
+blockPackedScenes = Array[PackedScene]([ExtResource("10_feppd"), ExtResource("11_aeaoo")])
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("3_112p8")
+
+[node name="DoltsManager" type="Node" parent="."]
+script = ExtResource("4_qn3nj")
+doltPackedScenes = Array[PackedScene]([ExtResource("15_p1837"), ExtResource("16_qv2vy")])
+
+[node name="GridNode" parent="." instance=ExtResource("2_j2q8x")]
+
+[node name="Commands" type="Node" parent="."]
+script = ExtResource("10_f0urt")
+
+[node name="Helper" type="Node" parent="."]
+script = ExtResource("12_436f3")
+
+[node name="SaveManager" type="Node" parent="."]
+script = ExtResource("17_sps8e")
+
+[node name="AudioManager" type="Node" parent="."]
+script = ExtResource("18_bnlop")
+musicTracks = Array[AudioStreamMP3]([ExtResource("20_ey15c")])
+
+[node name="Music" type="AudioStreamPlayer" parent="AudioManager"]
+volume_db = 10.0
+bus = &"Music"
+
+[node name="KeyPress" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("11_wt6go")
+volume_db = 10.0
+bus = &"SFX"
+
+[connection signal="text_submitted" from="Terminal/LineEdit" to="Terminal" method="_on_line_edit_text_submitted"]
+[connection signal="value_changed" from="Settings/base/AudioControl/master" to="Settings" method="_on_master_value_changed"]
+[connection signal="value_changed" from="Settings/base/AudioControl2/music" to="Settings" method="_on_music_value_changed"]
+[connection signal="value_changed" from="Settings/base/AudioControl3/sfx" to="Settings" method="_on_sfx_value_changed"]
