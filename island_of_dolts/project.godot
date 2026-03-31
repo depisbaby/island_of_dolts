@@ -27,6 +27,10 @@ window/size/mode=3
 window/size/resizable=false
 window/stretch/mode="viewport"
 
+[dotnet]
+
+project/assembly_name="gameoflife"
+
 [input]
 
 repeat_last={

@@ -56,7 +56,7 @@ func Load(args):
 	pass
 
 func SaveLocalData():
-	saveData.seed = Global.gameManager.random.seed
+	saveData.seed = Global.gameManager.seed
 	
 	saveData.playerName = Global.gameManager.playerName
 	saveData.playerPosition = Vector2(Global.gameManager.player.occupiedGridNode.xPos,Global.gameManager.player.occupiedGridNode.yPos)
@@ -66,5 +66,6 @@ func SaveLocalData():
 func LoadSaveData():
 	Global.gameManager.playerName = saveData.playerName
 	Global.gameManager.player.MoveTo(saveData.playerPosition.x, saveData.playerPosition.y)
+	
 	
 	pass

@@ -20,9 +20,18 @@ func _process(delta):
 func SpawnDolt(id:int, x:int, y:int) -> Dolt:
 	var dolt :Dolt= doltPackedScenes[id].instantiate()
 	add_child(dolt)
-	dolt.MoveTo(x,y)
+	
+	if !dolt.MoveTo(x,y):
+		dolt.queue_free()
+		return
+		
 	aiDolts.push_back(dolt)
+	dolt.health = dolt.maxHealth
 	return dolt
+	pass
+
+func DespawnDolt(dolt:Dolt):
+	aiDolts.erase(dolt)
 	pass
 	
 func SpawnPlayer(x:int, y:int) -> Dolt:
@@ -30,6 +39,7 @@ func SpawnPlayer(x:int, y:int) -> Dolt:
 	add_child(dolt)
 	dolt.MoveTo(x,y)
 	dolt.isPlayer = true
+	dolt.health = dolt.maxHealth
 	return dolt
 	pass
 	

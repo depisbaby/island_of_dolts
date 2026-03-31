@@ -1,32 +1,39 @@
 extends Node
 class_name Dolt
 
+@export var displayName: String
 @export var sprite: Texture2D
 @export var canWalkThroughBlocks: bool
 @export var flying:bool
+@export var maxHealth:int
+@export var items: Array[Item]
 
 var isPlayer: bool
 var occupiedGridNode: GridNode
 var priorityExhausted: bool
+var health:int
 
 	
-func MoveTo(x:int, y:int):
-	if occupiedGridNode != null:
-		occupiedGridNode.dolt = null
+func MoveTo(x:int, y:int)->bool:
 	var gridNode = Global.gridManager.GetNodeAt(x,y)
 	if gridNode == null:
-		push_error()
+		#push_error()
+		return false
 	if gridNode.dolt != null:
-		push_error()
+		#push_error()
+		return false
+	if occupiedGridNode != null:
+		occupiedGridNode.dolt = null
 	occupiedGridNode = gridNode
 	gridNode.dolt = self
-	pass
+	return true
 
 func GetSprite()->Texture2D:
 	return sprite
 	pass
 
 func AiReceivePriority():
+	CheckNode()
 	pass
 
 func AttemptMove(x:int,y:int):
@@ -43,4 +50,20 @@ func AttemptMove(x:int,y:int):
 			if !canWalkThroughBlocks: #cant move through blocks
 				return
 	MoveTo(node.xPos, node.yPos)
+
+func CheckNode():
+	if occupiedGridNode.isDangerous:
+		if !flying:
+			Perish()
+	if occupiedGridNode.block != null && !occupiedGridNode.block.walkable:
+		Perish()
+	
+	pass
+
+func Perish():
+	print("perished")
+	occupiedGridNode.dolt = null
+	Global.doltsManager.DespawnDolt(self)
+	queue_free()
+	pass
 	

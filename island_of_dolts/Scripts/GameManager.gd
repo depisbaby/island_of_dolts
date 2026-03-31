@@ -5,6 +5,7 @@ var gameRunning: bool
 var player:Dolt
 var random:RandomNumberGenerator
 var playerHasPriority:bool
+var seed:String
 
 var playerName:String
 var playerPosition:Vector2
@@ -33,9 +34,11 @@ func StartGame(args):
 	random = RandomNumberGenerator.new()
 	
 	if args.size()==0:
-		random.seed = str(randf()).hash()
+		seed = str(randf())
+		random.seed = seed.hash()
+		
 	else:
-		random.seed = args[0]
+		random.seed = args[0].hash()
 	
 	Global.gridManager.GenerateIsland()
 	
@@ -54,6 +57,7 @@ func StartGame(args):
 	
 	if Global.saveManager.saveData == null: # new game stuff such as character creation here
 		Global.doltsManager.NewGame()
+		Global.gameManager.player.displayName = Global.gameManager.playerName
 		Global.terminal.ClearTerminal()
 		Global.terminal.PrintWhite("What's your name?")
 		playerName = await Global.terminal.WaitForInput()
@@ -61,6 +65,7 @@ func StartGame(args):
 		
 		MainGameLoop()
 	
+	Global.gameManager.player.displayName = Global.gameManager.playerName
 	
 	pass
 
@@ -95,24 +100,59 @@ func PlayerMove(args):
 		return
 		
 	var direction:Vector2 = DirectionToVector(args[0])
+	if direction == Vector2(0,0):
+		Global.terminal.PrintRed("The first argument has to be direction (e.g. 'move n' or 'move sw').")
+		return
 	var node = Global.gridManager.GetNodeAt(player.occupiedGridNode.xPos+direction.x, player.occupiedGridNode.yPos+direction.y)
 	
 	if node == null:
-		Global.terminal.PrintRed(str("The path is blocked by an invisible wall."))
+		Global.terminal.PrintRed(str("Your path is blocked by an invisible wall."))
 		return
 		
 	if node.block != null:
 		if !node.block.walkable:
-			Global.terminal.PrintRed(str("The path is blocked by ",node.block.blockName,"."))
+			Global.terminal.PrintRed(str("Your path is blocked by a ",node.block.blockName,"."))
 			return
 			
 	if node.isDangerous:
-		Global.terminal.PrintRed(str("You feel like not swimming today."))
+		if !player.flying:
+			Global.terminal.PrintRed(str("You feel like not stepping in there."))
 		return
+	
+	if node.dolt != null:
+		Global.terminal.PrintRed(str("Your path is blocked by a ",node.dolt.displayName,"."))
 	
 	player.MoveTo(node.xPos,node.yPos)
 	Global.virtualViewport.FollowPlayer()
 	player.priorityExhausted = true
+		
+	pass
+
+func Examine(args):
+	var vector: Vector2
+	if args.size() == 0: #examine the node you are standing on
+		vector = Vector2(0,0)
+	else: #directional
+		vector = DirectionToVector(args[0])
+		if vector == Vector2(0,0):
+			Global.terminal.PrintRed("The first argument has to be direction (e.g. 'examine n' or ' examine sw').")
+			return
+	
+	var node = Global.gridManager.GetNodeAt(player.occupiedGridNode.xPos + vector.x, player.occupiedGridNode.yPos + vector.y)
+	if node == null:
+		Global.terminal.PrintWhite("You peer into abyss.")
+		return
+	
+	if node.dolt != null && !node.dolt.isPlayer:
+		Global.terminal.PrintWhite(str("It's a ", node.dolt.displayName,"."))
+		pass
+	
+	if node.block != null:
+		Global.terminal.PrintWhite(str("There is a ", node.block.blockName,"."))
+		pass
+	else:
+		Global.terminal.PrintWhite(str("The ground is covered in ", node.groundDescription,"."))
+	
 		
 	pass
 

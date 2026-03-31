@@ -11,7 +11,8 @@ var commands = {
 	"clear": Clear,
 	"help": Help,
 	"move": Move,
-	"save": Save
+	"save": Save,
+	"examine": Examine
 }
 
 func RunCommand(cmd, args):
@@ -30,7 +31,7 @@ func NewGame(args):
 	
 func LoadGame(args):
 	if args.size()== 0:
-		Global.terminal.PrintRed("Usage: load [save number]")
+		Global.terminal.PrintRed("To load use 'load [save name]' (e.g. 'load mysave').")
 		return
 	Global.saveManager.Load(args)
 	pass
@@ -45,4 +46,8 @@ func Move(args):
 
 func Save(args):
 	Global.saveManager.Save(args)
+	pass
+
+func Examine(args):
+	Global.gameManager.Examine(args)
 	pass

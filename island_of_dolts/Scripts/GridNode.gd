@@ -2,6 +2,7 @@ extends Node
 class_name GridNode
 
 @export var groundSprite: Texture2D
+@export var groundDescription: String
 
 var xPos:int
 var yPos:int
@@ -22,4 +23,5 @@ func GetSprite()->Texture2D:
 func SetWater():
 	groundSprite = Global.gridManager.groundSprites[1]
 	isDangerous = true
+	groundDescription = "Water"
 	pass

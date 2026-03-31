@@ -6,3 +6,4 @@
 [node name="GridNode" type="Node"]
 script = ExtResource("2_1rtgg")
 groundSprite = ExtResource("2_vy1l1")
+groundDescription = "Grass"
