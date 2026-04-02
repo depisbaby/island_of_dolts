@@ -6,7 +6,9 @@ class_name Dolt
 @export var canWalkThroughBlocks: bool
 @export var flying:bool
 @export var maxHealth:int
+@export var canHoldItems: float #in kg
 @export var items: Array[Item]
+
 
 var isPlayer: bool
 var occupiedGridNode: GridNode

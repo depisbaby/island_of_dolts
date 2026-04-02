@@ -10,3 +10,4 @@ var helper:Helper
 var saveManager:SaveManager
 var audioManager:AudioManager
 var settings :Settings
+var itemManager: ItemManager
