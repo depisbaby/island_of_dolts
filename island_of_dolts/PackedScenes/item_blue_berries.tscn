@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjy4tmwut1jpx"]
+
+[ext_resource type="Script" uid="uid://gkxe2dtbqlnd" path="res://Scripts/Item.gd" id="1_07bdf"]
+[ext_resource type="Texture2D" uid="uid://c2q3wfingbfia" path="res://Sprites/blue_berries.png" id="2_2b2km"]
+
+[node name="item_blue_berries" type="Node"]
+script = ExtResource("1_07bdf")
+itemName = "Blue Berries"
+weightPerItem = 0.01
+itemSprite = ExtResource("2_2b2km")

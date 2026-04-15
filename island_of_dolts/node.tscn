@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cg8yivshgfi7f"]
+[gd_scene load_steps=28 format=3 uid="uid://cg8yivshgfi7f"]
 
 [ext_resource type="Script" uid="uid://bcep4y5rb2buw" path="res://Scripts/Terminal.gd" id="1_l6pdb"]
 [ext_resource type="FontFile" uid="uid://6perapingsa6" path="res://Courier Prime Sans.ttf" id="1_qn3nj"]
@@ -23,6 +23,8 @@
 [ext_resource type="Script" uid="uid://b5h2jf71x4m1n" path="res://Scripts/AudioManager.gd" id="18_bnlop"]
 [ext_resource type="AudioStream" uid="uid://igw6dbi6qyt7" path="res://Audio/rain.mp3" id="20_ey15c"]
 [ext_resource type="Script" uid="uid://mi5hs0f0eqar" path="res://Scripts/ItemManager.gd" id="23_qv2vy"]
+[ext_resource type="PackedScene" uid="uid://bjy4tmwut1jpx" path="res://PackedScenes/item_blue_berries.tscn" id="24_8jewq"]
+[ext_resource type="Script" uid="uid://ocp35ycgbgpn" path="res://Scripts/ActionsManager.gd" id="25_3xwg0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tda05"]
 content_margin_left = 4.0
@@ -241,6 +243,10 @@ bus = &"SFX"
 
 [node name="ItemManager" type="Node" parent="."]
 script = ExtResource("23_qv2vy")
+itemsPackedScenes = Array[PackedScene]([ExtResource("24_8jewq")])
+
+[node name="ActionsManager" type="Node" parent="."]
+script = ExtResource("25_3xwg0")
 
 [connection signal="text_submitted" from="Terminal/LineEdit" to="Terminal" method="_on_line_edit_text_submitted"]
 [connection signal="value_changed" from="Settings/base/AudioControl/master" to="Settings" method="_on_master_value_changed"]

@@ -96,7 +96,18 @@ func PrintWhite(message):
 
 func PrintBlue(message):
 	terminalText.text = str(terminalText.text,"\n[color=79bdbe]",message,"[/color]")
+	pass
+
+func PrintYellow(message):
+	terminalText.text = str(terminalText.text,"\n[color=bebe79]",message,"[/color]")
+	pass
+
+func PrintGreen(message):
+	terminalText.text = str(terminalText.text,"\n[color=7cbe79]",message,"[/color]")
+	pass
 	
+func PrintPurple(message):
+	terminalText.text = str(terminalText.text,"\n[color=9479be]",message,"[/color]")
 	pass
 
 func ClearTerminal():

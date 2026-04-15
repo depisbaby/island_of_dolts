@@ -6,8 +6,9 @@ class_name Dolt
 @export var canWalkThroughBlocks: bool
 @export var flying:bool
 @export var maxHealth:int
-@export var canHoldItems: float #in kg
+@export var canHoldItems: bool #in kg
 @export var items: Array[Item]
+@export var strength: int
 
 
 var isPlayer: bool
@@ -63,7 +64,7 @@ func CheckNode():
 	pass
 
 func Perish():
-	print("perished")
+	#print("perished")
 	occupiedGridNode.dolt = null
 	Global.doltsManager.DespawnDolt(self)
 	queue_free()

@@ -56,6 +56,7 @@ func StartGame(args):
 	Global.virtualViewport.FollowPlayer()
 	
 	if Global.saveManager.saveData == null: # new game stuff such as character creation here
+		Global.itemManager.GiveItem(player,"Blue Berries", 5, [])
 		Global.doltsManager.NewGame()
 		Global.gameManager.player.displayName = Global.gameManager.playerName
 		Global.terminal.ClearTerminal()

@@ -8,4 +8,5 @@ script = ExtResource("1_sq3kk")
 displayName = "Deer"
 sprite = ExtResource("2_3rtjy")
 maxHealth = 100
+strength = 4
 metadata/_custom_type_script = "uid://dmqgp3pyjcum1"

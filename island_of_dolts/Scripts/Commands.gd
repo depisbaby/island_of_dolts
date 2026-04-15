@@ -12,7 +12,9 @@ var commands = {
 	"help": Help,
 	"move": Move,
 	"save": Save,
-	"examine": Examine
+	"examine": Examine,
+	"inventory": Inventory,
+	"i": Inventory
 }
 
 func RunCommand(cmd, args):
@@ -50,4 +52,8 @@ func Save(args):
 
 func Examine(args):
 	Global.gameManager.Examine(args)
+	pass
+	
+func Inventory(args):
+	Global.itemManager.PrintInventory(Global.gameManager.player)
 	pass

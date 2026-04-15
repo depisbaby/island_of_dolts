@@ -11,3 +11,4 @@ var saveManager:SaveManager
 var audioManager:AudioManager
 var settings :Settings
 var itemManager: ItemManager
+var actionsManager: ActionsManager
