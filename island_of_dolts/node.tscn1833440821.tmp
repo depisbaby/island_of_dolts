@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cg8yivshgfi7f"]
+[gd_scene load_steps=29 format=3 uid="uid://cg8yivshgfi7f"]
 
 [ext_resource type="Script" uid="uid://bcep4y5rb2buw" path="res://Scripts/Terminal.gd" id="1_l6pdb"]
 [ext_resource type="FontFile" uid="uid://6perapingsa6" path="res://Courier Prime Sans.ttf" id="1_qn3nj"]
@@ -13,18 +13,19 @@
 [ext_resource type="Texture2D" uid="uid://df5wvqid1uoi3" path="res://Sprites/grass.png" id="8_cmsyx"]
 [ext_resource type="Texture2D" uid="uid://c04oh2oqqxyqs" path="res://Sprites/ocean.png" id="9_feppd"]
 [ext_resource type="Script" uid="uid://bvu130pw1yooa" path="res://Scripts/Commands.gd" id="10_f0urt"]
-[ext_resource type="PackedScene" uid="uid://c8brhii4n44f3" path="res://PackedScenes/Blocks/block_rock.tscn" id="10_feppd"]
-[ext_resource type="PackedScene" uid="uid://dmtyk53xatw4m" path="res://PackedScenes/Blocks/block_tree.tscn" id="11_aeaoo"]
+[ext_resource type="PackedScene" uid="uid://c8brhii4n44f3" path="res://PackedScenes/Blocks/rock.tscn" id="10_feppd"]
+[ext_resource type="PackedScene" uid="uid://dmtyk53xatw4m" path="res://PackedScenes/Blocks/tree.tscn" id="11_aeaoo"]
 [ext_resource type="AudioStream" uid="uid://bkv2xdxqyosik" path="res://Audio/keypress.mp3" id="11_wt6go"]
 [ext_resource type="Script" uid="uid://d28gb5vpempbv" path="res://Scripts/Helper.gd" id="12_436f3"]
-[ext_resource type="PackedScene" uid="uid://cuyael2mplndx" path="res://PackedScenes/Dolts/dolt_player.tscn" id="15_p1837"]
-[ext_resource type="PackedScene" uid="uid://doj8gwni5axh7" path="res://PackedScenes/Dolts/dolt_deer.tscn" id="16_qv2vy"]
+[ext_resource type="PackedScene" uid="uid://cuyael2mplndx" path="res://PackedScenes/Dolts/player.tscn" id="15_p1837"]
+[ext_resource type="PackedScene" uid="uid://doj8gwni5axh7" path="res://PackedScenes/Dolts/deer.tscn" id="16_qv2vy"]
 [ext_resource type="Script" uid="uid://ckxeyhbshatw6" path="res://Scripts/SaveManager.gd" id="17_sps8e"]
 [ext_resource type="Script" uid="uid://b5h2jf71x4m1n" path="res://Scripts/AudioManager.gd" id="18_bnlop"]
 [ext_resource type="AudioStream" uid="uid://igw6dbi6qyt7" path="res://Audio/rain.mp3" id="20_ey15c"]
 [ext_resource type="Script" uid="uid://mi5hs0f0eqar" path="res://Scripts/ItemManager.gd" id="23_qv2vy"]
+[ext_resource type="PackedScene" uid="uid://bjy4tmwut1jpx" path="res://PackedScenes/item_blue_berries.tscn" id="24_8jewq"]
 [ext_resource type="Script" uid="uid://ocp35ycgbgpn" path="res://Scripts/ActionsManager.gd" id="25_3xwg0"]
-[ext_resource type="PackedScene" uid="uid://44aknhe52nqi" path="res://PackedScenes/Actions/action_swing.tscn" id="26_85l3h"]
+[ext_resource type="PackedScene" uid="uid://44aknhe52nqi" path="res://PackedScenes/Actions/Swing.tscn" id="26_85l3h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tda05"]
 content_margin_left = 4.0
@@ -241,7 +242,7 @@ bus = &"SFX"
 
 [node name="ItemManager" type="Node" parent="."]
 script = ExtResource("23_qv2vy")
-grassItems = Array[String](["Blue Berries", "Worm"])
+itemsPackedScenes = Array[PackedScene]([ExtResource("24_8jewq")])
 
 [node name="ActionsManager" type="Node" parent="."]
 script = ExtResource("25_3xwg0")

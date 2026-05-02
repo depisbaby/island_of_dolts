@@ -7,3 +7,6 @@ class_name Block
 
 func GetSprite()->Texture2D:
 	return sprite
+	
+func Forage(forager:Dolt):
+	pass

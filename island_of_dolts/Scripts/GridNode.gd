@@ -25,3 +25,13 @@ func SetWater():
 	isDangerous = true
 	groundDescription = "Water"
 	pass
+	
+func Forage(forager:Dolt):
+	
+	if block != null:#forage the block
+		block.Forage(forager)
+		return
+	
+	Global.itemManager.Forage(forager, groundDescription)
+	forager.ExhaustPriority()
+	pass

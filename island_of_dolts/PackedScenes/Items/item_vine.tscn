@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3owj8wnmys"]
+
+[ext_resource type="Script" uid="uid://gkxe2dtbqlnd" path="res://Scripts/Item.gd" id="1_k0v84"]
+[ext_resource type="Texture2D" uid="uid://41yj54pte2wa" path="res://Sprites/vine.png" id="2_k0v84"]
+
+[node name="item_vine" type="Node"]
+script = ExtResource("1_k0v84")
+itemName = "Vine"
+weightPerItem = 0.09
+itemSprite = ExtResource("2_k0v84")

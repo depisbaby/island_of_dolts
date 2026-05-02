@@ -5,6 +5,7 @@ class_name VirtualViewport
 var screen: Array[TextureRect]
 var inWorldPosX:int
 var inWorldPosY:int
+var seenNodes: Array[GridNode]
 
 func _enter_tree():
 	Global.virtualViewport = self
@@ -35,6 +36,7 @@ func MoveTo(_x:int,_y:int):
 			var node = Global.gridManager.GetNodeAt(posX,posY)
 			if node != null:
 				screen[i].texture = node.GetSprite()
+				
 			else:
 				screen[i].texture = null
 			i = i+1
@@ -42,6 +44,7 @@ func MoveTo(_x:int,_y:int):
 	pass
 
 func FollowPlayer():
+	seenNodes.clear()
 	inWorldPosX = Global.gameManager.player.occupiedGridNode.xPos
 	inWorldPosY = Global.gameManager.player.occupiedGridNode.yPos
 	var i:int = 0
@@ -51,7 +54,13 @@ func FollowPlayer():
 			var posY = inWorldPosY-4+y
 			var node = Global.gridManager.GetNodeAt(posX,posY)
 			if node != null:
+				seenNodes.push_back(node)
 				screen[i].texture = node.GetSprite()
 			i = i+1
 			
 	pass
+	
+func IsInView(node:GridNode)->bool:
+	if seenNodes.has(node):
+		return true
+	return false

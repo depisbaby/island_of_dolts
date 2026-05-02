@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://dmtyk53xatw4m"]
 
-[ext_resource type="Script" uid="uid://dcky2u634xugc" path="res://Scripts/Block.gd" id="1_48ihm"]
+[ext_resource type="Script" uid="uid://b0sydknqwhom0" path="res://Scripts/Blocks/Block_Tree.gd" id="1_c0hvu"]
 [ext_resource type="Texture2D" uid="uid://dfjd83uqhgp0t" path="res://Sprites/tree.png" id="2_48ihm"]
 
 [node name="Tree" type="Node"]
-script = ExtResource("1_48ihm")
+script = ExtResource("1_c0hvu")
 blockName = "Tree"
 sprite = ExtResource("2_48ihm")
 walkable = true
-metadata/_custom_type_script = "uid://dcky2u634xugc"
+metadata/_custom_type_script = "uid://b0sydknqwhom0"

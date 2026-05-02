@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://c8brhii4n44f3"]
 
-[ext_resource type="Script" uid="uid://dcky2u634xugc" path="res://Scripts/Block.gd" id="1_nf3q1"]
+[ext_resource type="Script" uid="uid://jd0bp3i8p36t" path="res://Scripts/Blocks/Block_Rock.gd" id="1_sybye"]
 [ext_resource type="Texture2D" uid="uid://bsplb4ctbyhd7" path="res://Sprites/rock.png" id="2_lk568"]
 
 [node name="Rock" type="Node"]
-script = ExtResource("1_nf3q1")
+script = ExtResource("1_sybye")
 blockName = "Rock"
 sprite = ExtResource("2_lk568")
-metadata/_custom_type_script = "uid://dcky2u634xugc"
+metadata/_custom_type_script = "uid://jd0bp3i8p36t"

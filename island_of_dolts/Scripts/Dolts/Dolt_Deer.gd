@@ -1,9 +1,10 @@
 extends Dolt
-class_name Deer
+class_name Dolt_Deer
 var state:int #0 random roam, 
 
-func AiReceivePriority():
-	super.AiReceivePriority()
+func ReceivePriority():
+	super.ReceivePriority()
+	#print("hup")
 	match state:
 		0:
 			#print("roaming")
@@ -14,6 +15,7 @@ func AiReceivePriority():
 
 func Roam():
 	var random = randi_range(1,20)
+	
 	if random < 17: #do nothing
 		return
 	if random == 17:
@@ -24,4 +26,9 @@ func Roam():
 		AttemptMove(0,1)
 	if random == 20:
 		AttemptMove(-1,0)
+	pass
+
+func OnInitialSpawn():
+	#test
+	#Global.itemManager.GiveItem(self,"Blue Berries", randi_range(0,10), [])
 	pass

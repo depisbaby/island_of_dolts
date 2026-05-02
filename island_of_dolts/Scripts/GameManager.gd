@@ -30,7 +30,7 @@ func StartGame(args):
 	if gameRunning:
 		return
 	gameRunning = true
-	Global.audioManager.PlayRandomMusic()
+	#Global.audioManager.PlayRandomMusic()
 	random = RandomNumberGenerator.new()
 	
 	if args.size()==0:
@@ -42,31 +42,28 @@ func StartGame(args):
 	
 	Global.gridManager.GenerateIsland()
 	
-	#get random starting position
-	var x:int
-	var y:int
-	while true:
-		x = random.randi_range(10,Global.gridManager.mapSize-10)
-		y = random.randi_range(10,Global.gridManager.mapSize-10)
-		var node = Global.gridManager.GetNodeAt(x,y)
-		if node.block == null && !node.isDangerous:
-			break
-			
-	player = Global.doltsManager.SpawnPlayer(x,y)
-	Global.virtualViewport.FollowPlayer()
-	
 	if Global.saveManager.saveData == null: # new game stuff such as character creation here
+		#get random starting position
+		var x:int
+		var y:int
+		while true:
+			x = random.randi_range(10,Global.gridManager.mapSize-10)
+			y = random.randi_range(10,Global.gridManager.mapSize-10)
+			var node = Global.gridManager.GetNodeAt(x,y)
+			if node.block == null && !node.isDangerous:
+				break
+		player = Global.doltsManager.SpawnPlayer(x,y)
 		Global.itemManager.GiveItem(player,"Blue Berries", 5, [])
 		Global.doltsManager.NewGame()
-		Global.gameManager.player.displayName = Global.gameManager.playerName
 		Global.terminal.ClearTerminal()
 		Global.terminal.PrintWhite("What's your name?")
 		playerName = await Global.terminal.WaitForInput()
+		Global.gameManager.player.displayName = playerName
 		Global.terminal.PrintWhite(str("Good luck ", playerName,". Use 'help basics' to get started."))
-		
+		Global.virtualViewport.FollowPlayer()
 		MainGameLoop()
 	
-	Global.gameManager.player.displayName = Global.gameManager.playerName
+	
 	
 	pass
 
@@ -79,11 +76,13 @@ func MainGameLoop():
 			
 		Global.doltsManager.priorityQueue.shuffle()#shuffle the queue
 		
+		Global.virtualViewport.FollowPlayer()#Update camera
+		
 		player.priorityExhausted = false#player always gets to do things first
 		await PlayerReceivePriority()
 		
 		for dolt in Global.doltsManager.priorityQueue: #then go through actions of each ai dolt
-			await dolt.AiReceivePriority()
+			await dolt.ReceivePriority()
 			
 		Global.doltsManager.priorityQueue.clear() #clear the queue
 		
@@ -91,15 +90,20 @@ func MainGameLoop():
 	pass
 
 func PlayerReceivePriority():
+	player.ReceivePriority()
 	playerHasPriority = true
 	while !player.priorityExhausted:
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().process_frame
 	playerHasPriority = false
 
 func PlayerMove(args):
 	if !playerHasPriority:
 		return
-		
+	
+	if args.size() == 0:
+		Global.terminal.PrintRed("The first argument has to be direction (e.g. 'move n' or 'move sw').")
+		return
+	
 	var direction:Vector2 = DirectionToVector(args[0])
 	if direction == Vector2(0,0):
 		Global.terminal.PrintRed("The first argument has to be direction (e.g. 'move n' or 'move sw').")
@@ -124,7 +128,7 @@ func PlayerMove(args):
 		Global.terminal.PrintRed(str("Your path is blocked by a ",node.dolt.displayName,"."))
 	
 	player.MoveTo(node.xPos,node.yPos)
-	Global.virtualViewport.FollowPlayer()
+	#Global.virtualViewport.FollowPlayer()
 	player.priorityExhausted = true
 		
 	pass
@@ -175,5 +179,13 @@ func DirectionToVector(direction:String)->Vector2:
 			return Vector2(-1,-1)
 		"sw":
 			return Vector2(-1,1)
+	Global.terminal.PrintRed("Valid directions are 'n', 'e', 's', 'w', 'ne', 'se', 'nw' and 'sw'.")
 	return Vector2(0,0)
 	pass
+
+func Wait():
+	Global.terminal.PrintWhite("You wait.")
+	player.priorityExhausted = true
+	pass
+	
+	

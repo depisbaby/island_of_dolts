@@ -22,15 +22,17 @@ func Save(args):
 			Global.terminal.PrintRed(str("Save name '",args[0],"' already exists. Choose a different name."))
 			return
 	
+	
 	if saveData == null: #this is a new game
 		saveData = SaveData.new()
 		saveData.saveName = args[0]
-	
+		
 	SaveLocalData()
 	
 	var result = ResourceSaver.save(saveData, path)
 	if result == OK:
 		print("Saved successfully")
+		Global.terminal.PrintGreen(str("Game '",saveData.saveName, "' saved!"))
 	pass
 
 func Load(args):
@@ -51,21 +53,23 @@ func Load(args):
 	
 	LoadSaveData()
 	
+	Global.gameManager.player.displayName = Global.gameManager.playerName
 	Global.virtualViewport.FollowPlayer()
 	Global.gameManager.MainGameLoop()
 	pass
 
 func SaveLocalData():
 	saveData.seed = Global.gameManager.seed
-	
 	saveData.playerName = Global.gameManager.playerName
-	saveData.playerPosition = Vector2(Global.gameManager.player.occupiedGridNode.xPos,Global.gameManager.player.occupiedGridNode.yPos)
+	
+	Global.doltsManager.SaveDolts(saveData)
+	
 	
 	pass
 
 func LoadSaveData():
 	Global.gameManager.playerName = saveData.playerName
-	Global.gameManager.player.MoveTo(saveData.playerPosition.x, saveData.playerPosition.y)
 	
+	Global.doltsManager.LoadDolts(saveData)
 	
 	pass

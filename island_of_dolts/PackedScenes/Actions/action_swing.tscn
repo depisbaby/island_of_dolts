@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://44aknhe52nqi"]
+
+[ext_resource type="Script" uid="uid://cy16no8cijtfx" path="res://Scripts/Actions/Action_Swing.gd" id="1_rva6h"]
+
+[node name="Swing" type="Node"]
+script = ExtResource("1_rva6h")
+actionName = "swing"
+exhausting = true
+hasFollowUp = null

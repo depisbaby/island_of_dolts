@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bauxp7p8e81vs"]
+
+[ext_resource type="Script" uid="uid://gkxe2dtbqlnd" path="res://Scripts/Item.gd" id="1_7yu24"]
+[ext_resource type="Texture2D" uid="uid://c0wlhvlfx4beh" path="res://Sprites/stick.png" id="2_7yu24"]
+
+[node name="item_stick" type="Node"]
+script = ExtResource("1_7yu24")
+itemName = "Stick"
+weightPerItem = 0.12
+itemSprite = ExtResource("2_7yu24")

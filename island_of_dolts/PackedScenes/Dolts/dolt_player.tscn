@@ -7,5 +7,5 @@
 script = ExtResource("1_2h0jo")
 sprite = ExtResource("2_c75oi")
 maxHealth = 100
-canHoldItems = true
+canTakeItems = true
 strength = 5

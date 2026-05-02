@@ -8,6 +8,7 @@ class_name GridManager
 @export var blockPackedScenes: Array[PackedScene]
 var grid: Array[GridNode]
 var inited:bool
+var blockChanges : BlockChange
 
 
 func _enter_tree():
@@ -57,13 +58,13 @@ func GenerateIsland():
 			
 			#add rocks
 			if rockNoise.get_noise_2d(x,y) > 0.1:
-				PlaceBlock(0,x,y)
+				PlaceBlock(0,x,y,false)
 			
 			#add trees
 			var rng = Global.gameManager.random.randf() - 0.5
 			if rng > treeNoise.get_noise_2d(x,y):
 				if GetNodeAt(x,y).block == null:
-					PlaceBlock(1,x,y)
+					PlaceBlock(1,x,y,false)
 			
 	
 	inited = true
@@ -78,7 +79,7 @@ func GetNodeAt(x:int, y:int) -> GridNode:
 	return grid[i]
 	pass
 
-func PlaceBlock(id:int, x:int, y:int):
+func PlaceBlock(id:int, x:int, y:int, makeBlockChange: bool):
 	var node = GetNodeAt(x,y)
 	if node == null:
 		return
@@ -86,6 +87,9 @@ func PlaceBlock(id:int, x:int, y:int):
 	var block:Block = blockPackedScenes[id].instantiate()
 	add_child(block)
 	node.block = block
+	
+	if makeBlockChange:
+		MakeABlockChange(id,Vector2(x,y))
 	
 	pass
 
@@ -99,6 +103,18 @@ func GetCoastModifier(input:int)->float:
 		var distance = input
 		return clampf(distance * step,0.0,1.0)
 	pass
+
+func MakeABlockChange(blockId:int, position:Vector2): #no block
+	var blockChange:BlockChange = BlockChange.new()
+	Global.saveManager.saveData.blockChanges.push_front(blockChange)
+	pass
+
+func GetNodeFromPosition(position:Vector2, direction:Vector2, steps:int)->GridNode:
+	var _position:Vector2 = position + direction * steps
+	return GetNodeAt(_position.x, _position.y)
+	pass
+
+	
 
 		
 			

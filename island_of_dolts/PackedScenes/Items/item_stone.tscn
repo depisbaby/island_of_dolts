@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://b055j8wt3u0gf"]
+
+[ext_resource type="Script" uid="uid://gkxe2dtbqlnd" path="res://Scripts/Item.gd" id="1_8ch1c"]
+[ext_resource type="Texture2D" uid="uid://jubaqbg8ym5d" path="res://Sprites/stone.png" id="2_8ch1c"]
+
+[node name="item_stone" type="Node"]
+script = ExtResource("1_8ch1c")
+itemName = "Stone"
+weightPerItem = 0.3
+itemSprite = ExtResource("2_8ch1c")

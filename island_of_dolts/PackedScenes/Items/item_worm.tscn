@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuu4ptdfn8kpj"]
+
+[ext_resource type="Script" uid="uid://gkxe2dtbqlnd" path="res://Scripts/Item.gd" id="1_2p2y6"]
+[ext_resource type="Texture2D" uid="uid://pby62hgi863w" path="res://Sprites/worm.png" id="2_2p2y6"]
+
+[node name="item_worm" type="Node"]
+script = ExtResource("1_2p2y6")
+itemName = "Worm"
+weightPerItem = 0.01
+itemSprite = ExtResource("2_2p2y6")

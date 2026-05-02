@@ -2,19 +2,20 @@ extends Node
 class_name Dolt
 
 @export var displayName: String
+@export var position:Vector2
 @export var sprite: Texture2D
 @export var canWalkThroughBlocks: bool
 @export var flying:bool
 @export var maxHealth:int
-@export var canHoldItems: bool #in kg
+@export var health:int
+@export var canTakeItems: bool #in kg
 @export var items: Array[Item]
+@export var priorityExhausted: bool
 @export var strength: int
 
 
 var isPlayer: bool
 var occupiedGridNode: GridNode
-var priorityExhausted: bool
-var health:int
 
 	
 func MoveTo(x:int, y:int)->bool:
@@ -28,6 +29,7 @@ func MoveTo(x:int, y:int)->bool:
 	if occupiedGridNode != null:
 		occupiedGridNode.dolt = null
 	occupiedGridNode = gridNode
+	position = Vector2(x,y)
 	gridNode.dolt = self
 	return true
 
@@ -35,8 +37,12 @@ func GetSprite()->Texture2D:
 	return sprite
 	pass
 
-func AiReceivePriority():
+func ReceivePriority():
 	CheckNode()
+	pass
+	
+func ExhaustPriority():
+	priorityExhausted = true
 	pass
 
 func AttemptMove(x:int,y:int):
@@ -55,6 +61,9 @@ func AttemptMove(x:int,y:int):
 	MoveTo(node.xPos, node.yPos)
 
 func CheckNode():
+	if isPlayer:
+		return
+	
 	if occupiedGridNode.isDangerous:
 		if !flying:
 			Perish()
@@ -68,5 +77,21 @@ func Perish():
 	occupiedGridNode.dolt = null
 	Global.doltsManager.DespawnDolt(self)
 	queue_free()
+	if Global.virtualViewport.IsInView(occupiedGridNode):
+		Global.terminal.PrintWhite(str(displayName, " perished."))
+	pass
+
+func GetPosition()->Vector2:
+	return Vector2(occupiedGridNode.xPos, occupiedGridNode.yPos)
+	pass
+
+func ApplyPhysicalDamage(amount:int):
+	health = health - amount
+	if health < 0:
+		Perish()
+	pass
+
+func OnInitialSpawn(): #happens when dolt is a newly spawned (doesnt happen when game is loaded)
+	
 	pass
 	
