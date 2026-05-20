@@ -32,7 +32,8 @@ func SpawnDolt(id:int, x:int, y:int) -> Dolt:
 
 func InitialSpawnDolt(id:int, x:int, y:int) -> Dolt:
 	var dolt :Dolt = SpawnDolt(id,x,y)
-	dolt.OnInitialSpawn()
+	if dolt != null:
+		dolt.OnInitialSpawn()
 	return dolt
 	pass
 	

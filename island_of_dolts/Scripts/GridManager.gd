@@ -51,7 +51,7 @@ func GenerateIsland():
 			node.yPos = y
 			
 			#add bodies of water
-			if waterNoise.get_noise_2d(x,y)*GetCoastModifier(x)*GetCoastModifier(y) > 0.1:
+			if waterNoise.get_noise_2d(x,y)+GetCoastModifier(x)+GetCoastModifier(y) > 0.1:
 				node.SetWater()
 				continue
 				pass
@@ -94,14 +94,12 @@ func PlaceBlock(id:int, x:int, y:int, makeBlockChange: bool):
 	pass
 
 func GetCoastModifier(input:int)->float:
-	var coastLength:float = 10.0
-	var step:float = 1.0/coastLength
+	var distanceFromEdge:int
 	if input > mapSize/2:
-		var distance = mapSize - input
-		return clampf(distance * step,0.0,1.0)
+		distanceFromEdge = mapSize - input
 	else:
-		var distance = input
-		return clampf(distance * step,0.0,1.0)
+		distanceFromEdge = input
+	return clampf(1.0-(distanceFromEdge*0.1),0.0,1.0)
 	pass
 
 func MakeABlockChange(blockId:int, position:Vector2): #no block

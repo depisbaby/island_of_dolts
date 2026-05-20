@@ -53,7 +53,7 @@ func StartGame(args):
 			if node.block == null && !node.isDangerous:
 				break
 		player = Global.doltsManager.SpawnPlayer(x,y)
-		Global.itemManager.GiveItem(player,"Blue Berries", 5, [])
+		#Global.itemManager.GiveItem(player,"Berries", 5, [])
 		Global.doltsManager.NewGame()
 		Global.terminal.ClearTerminal()
 		Global.terminal.PrintWhite("What's your name?")
@@ -116,13 +116,14 @@ func PlayerMove(args):
 		
 	if node.block != null:
 		if !node.block.walkable:
-			Global.terminal.PrintRed(str("Your path is blocked by a ",node.block.blockName,"."))
-			return
+			if !player.canWalkThroughBlocks:
+				Global.terminal.PrintRed(str("Your path is blocked by a ",node.block.blockName,"."))
+				return
 			
 	if node.isDangerous:
 		if !player.flying:
 			Global.terminal.PrintRed(str("You feel like not stepping in there."))
-		return
+			return
 	
 	if node.dolt != null:
 		Global.terminal.PrintRed(str("Your path is blocked by a ",node.dolt.displayName,"."))

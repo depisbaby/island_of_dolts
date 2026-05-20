@@ -19,7 +19,8 @@ var commands = {
 	"p": Perform,
 	"wait": Wait,
 	"w":Wait,
-	"forage":Forage
+	"forage":Forage,
+	"drop":Drop
 }
 
 func RunCommand(cmd, args):
@@ -98,4 +99,26 @@ func Forage(args):
 		var node:GridNode = Global.gridManager.GetNodeFromPosition(Global.gameManager.player.position,direction,1)
 		if node != null:
 			node.Forage(Global.gameManager.player)
+	pass
+	
+func Drop(args):
+	if !Global.gameManager.playerHasPriority:
+		return
+		
+	if args.size() == 0:
+		Global.terminal.PrintRed("Specify an item to drop. (e.g. 'drop Stick')")
+		return
+		pass
+		
+	if args.size() == 2: #amount specified
+		
+		if args[1].is_valid_int():
+			var amount:int = int(args[1])
+			Global.itemManager.PlayerDropItem(args[0],amount)
+		else:
+			Global.terminal.PrintRed("Use an integer to specify the amount of items to drop. (e.g. 'drop Stick 5')")
+			pass
+	else:#
+		Global.itemManager.PlayerDropItem(args[0], 1)
+		
 	pass

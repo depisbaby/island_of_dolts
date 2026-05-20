@@ -27,7 +27,8 @@ func ActionBody(performer:Dolt, direction:Vector2, data: Array[String]):
 	if dolt != null:
 		var damage:int = 20
 		dolt.ApplyPhysicalDamage(damage)
-		Global.terminal.PrintWhite(str(performer.displayName, "'s swing hit ", dolt.displayName, " dealing them ", damage, " damage."))
+		if Global.virtualViewport.IsInView(performer.occupiedGridNode):
+			Global.terminal.PrintWhite(str(performer.displayName, "'s swing hit ", dolt.displayName, " dealing them ", damage, " damage."))
 		
 	pass
 	

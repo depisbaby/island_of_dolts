@@ -5,7 +5,7 @@ class_name ItemManager
 var itemLibrary: Array[Item]
 var items:Array[Item]
 @onready var itemsPackedScenes: Array[PackedScene] = [
-	preload("res://PackedScenes/Items/item_blue_berries.tscn"),
+	preload("res://PackedScenes/Items/item_berries.tscn"),
 	preload("res://PackedScenes/Items/item_worm.tscn"),
 	preload("res://PackedScenes/Items/item_stone.tscn"),
 	preload("res://PackedScenes/Items/item_stick.tscn"),
@@ -45,7 +45,8 @@ func _ready() -> void:
 
 func InitItems():
 	for ps in itemsPackedScenes:
-		var item = ps.instantiate()
+		var item :Item= ps.instantiate()
+		item.position = Vector2(-1,-1)
 		itemLibrary.push_back(item)
 		
 		
@@ -128,5 +129,50 @@ func Forage(forager:Dolt,groundDescription:String):
 		"Grass":
 			GiveItem(forager,grassItems[randi_range(0,grassItems.size()-1)],1,[])
 		
+	pass
+
+func PlaceItemInWorld(position:Vector2, item:Item)->bool:
+	var node:GridNode = Global.gridManager.GetNodeAt(position.x, position.y)
+	if node == null:
+		return false
+	
+	if node.block != null:
+		return false
+		
+	for _item in node.items:
+		if _item.itemName == item.itemName:
+			if item.data.size() == 0 && _item.data.size() == 0:
+				_item.amount = item.amount
+				item.queue_free()
+				return true
+		
+	node.items.push_front(item)
+	item.position = position
+	return true
+
+func PlayerDropItem(itemName:String, amount:int):
+	
+	var found:Item 
+	for item in Global.gameManager.player.items:
+		if item.itemName == itemName:
+			found = item
 			
+	if found == null:
+		Global.terminal.PrintRed(str("There is no '",itemName, "' in your inventory."))
+		return
+	
+	var _itemName:String = found.itemName
+	var _amount:int
+	
+	if amount >= found.amount || amount < 1: #drop all
+		_amount = found.amount
+		Global.gameManager.player.items.erase(found)
+		PlaceItemInWorld(Global.gameManager.player.position, found)
+	else :
+		_amount = amount
+		found.amount = found.amount - _amount
+		var newItem:Item = found.duplicate()
+		PlaceItemInWorld(Global.gameManager.player.position, newItem)
+	
+	Global.terminal.PrintWhite(str("You dropped ",_amount,"x ",_itemName))
 	pass

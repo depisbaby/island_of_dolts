@@ -6,6 +6,8 @@
 [node name="Player" type="Node"]
 script = ExtResource("1_2h0jo")
 sprite = ExtResource("2_c75oi")
+canWalkThroughBlocks = true
+flying = true
 maxHealth = 100
 canTakeItems = true
 strength = 5

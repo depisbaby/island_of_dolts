@@ -9,10 +9,15 @@ var yPos:int
 var dolt: Dolt
 var block : Block
 var isDangerous:bool
+var items:Array[Item]
+
 
 func GetSprite()->Texture2D:
 	if dolt != null:
 		return dolt.GetSprite()
+		
+	if items.size() != 0:
+		return items[0].itemSprite
 	
 	if block != null:
 		return block.GetSprite()
