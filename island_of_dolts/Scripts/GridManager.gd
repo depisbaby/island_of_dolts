@@ -23,6 +23,39 @@ func _ready():
 func _process(delta):
 	pass
 
+func GenerateFromImage(imagePath:String):
+	var treeNoise:FastNoiseLite = FastNoiseLite.new()
+	
+	
+	var map: Image = Image.load_from_file(imagePath)
+	
+	for y in mapSize:
+		for x in mapSize:
+			var node : GridNode = gridNodePackedScene.instantiate()
+			add_child(node)
+			grid.push_back(node)
+			node.xPos = x
+			node.yPos = y
+			
+			if x > map.get_width() || y > map.get_height():
+				node.SetWater()
+				continue
+				
+			var value :Color = map.get_pixel(x, y)
+			match value:
+				Color8(0,0,255):
+					node.SetWater()
+				Color8(0,255,0):
+					var rng = Global.gameManager.random.randf() - 0.5
+					if rng > treeNoise.get_noise_2d(x,y):
+						if GetNodeAt(x,y).block == null:
+							PlaceBlock(1,x,y,false)
+					pass
+				Color8(127, 127, 127):
+					PlaceBlock(0,x,y,false)
+	inited = true	
+	pass
+
 func GenerateIsland():
 	
 	
@@ -37,9 +70,9 @@ func GenerateIsland():
 	rockNoise.frequency = 0.1
 	
 	var treeNoise:FastNoiseLite = FastNoiseLite.new()
-	rockNoise.noise_type = FastNoiseLite.TYPE_PERLIN
-	rockNoise.offset = Vector3(Global.gameManager.random.randf(),Global.gameManager.random.randf(),Global.gameManager.random.randf())
-	rockNoise.frequency = 0.1
+	#rockNoise.noise_type = FastNoiseLite.TYPE_PERLIN
+	#rockNoise.offset = Vector3(Global.gameManager.random.randf(),Global.gameManager.random.randf(),Global.gameManager.random.randf())
+	#rockNoise.frequency = 0.1
 	
 	
 	for y in mapSize:

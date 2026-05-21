@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CraftingRecipe" load_steps=2 format=3 uid="uid://dt06gua1g5tan"]
+
+[ext_resource type="Script" uid="uid://davdu6ft3cnmy" path="res://Scripts/CraftingRecipe.gd" id="1_6pus7"]
+
+[resource]
+script = ExtResource("1_6pus7")
+itemName = "Club"
+amountCrafted = 1
+itemsRequired = Array[String](["Stone", "Vine", "Stick"])
+amountsRequired = Array[int]([1, 5, 3])
+metadata/_custom_type_script = "uid://davdu6ft3cnmy"

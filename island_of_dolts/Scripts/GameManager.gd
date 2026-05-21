@@ -67,6 +67,26 @@ func StartGame(args):
 	
 	pass
 
+func StartTutorial():
+	if gameRunning:
+		return
+	gameRunning = true
+	random = RandomNumberGenerator.new()
+	
+	
+	Global.gridManager.GenerateFromImage("res://Sprites/tutorial.png")
+	player = Global.doltsManager.SpawnPlayer(20,20)
+	Global.doltsManager.Tutorial()
+	Global.terminal.ClearTerminal()
+	playerName = "You"
+	Global.gameManager.player.displayName = playerName
+	Global.virtualViewport.FollowPlayer()
+	var tutorial :Tutorial = Tutorial.new()
+	add_child(tutorial)
+	tutorial.Start()
+	MainGameLoop()
+	pass
+
 func MainGameLoop():
 	while true:# turn cycle begins
 		
@@ -150,8 +170,14 @@ func Examine(args):
 		return
 	
 	if node.dolt != null && !node.dolt.isPlayer:
-		Global.terminal.PrintWhite(str("It's a ", node.dolt.displayName,"."))
+		Global.terminal.PrintWhite(str("There is a ", node.dolt.displayName,".\n"))
 		pass
+	
+	if node.items.size() > 0:
+		Global.terminal.PrintWhite("\nThere are following items:")
+		for item:Item in node.items:
+			Global.terminal.PrintWhite(str("- ", item.amount,"x ",item.itemName))
+		Global.terminal.PrintWhite("\n")
 	
 	if node.block != null:
 		Global.terminal.PrintWhite(str("There is a ", node.block.blockName,"."))

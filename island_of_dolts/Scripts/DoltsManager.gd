@@ -60,6 +60,10 @@ func NewGame():
 		pass
 	pass
 	
+func Tutorial():
+	InitialSpawnDolt(1,100,20)
+	pass
+	
 func SaveDolts(saveData: SaveData):
 	saveData.aiDoltsInGame.clear()
 	saveData.itemsInGame.clear()

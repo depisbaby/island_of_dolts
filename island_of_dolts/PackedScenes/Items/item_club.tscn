@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://o6kdl03688te"]
+
+[ext_resource type="Script" uid="uid://gkxe2dtbqlnd" path="res://Scripts/Item.gd" id="1_u2hx6"]
+[ext_resource type="Texture2D" uid="uid://cjm1ewhjlna6k" path="res://Sprites/club.png" id="2_u2hx6"]
+
+[node name="item_club" type="Node"]
+script = ExtResource("1_u2hx6")
+itemName = "Club"
+weightPerItem = 1.2
+itemSprite = ExtResource("2_u2hx6")

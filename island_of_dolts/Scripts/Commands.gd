@@ -8,6 +8,7 @@ func _enter_tree():
 var commands = {
 	"new": NewGame,
 	"load": LoadGame,
+	"tutorial": Tutorial,
 	"clear": Clear,
 	"help": Help,
 	"move": Move,
@@ -20,7 +21,9 @@ var commands = {
 	"wait": Wait,
 	"w":Wait,
 	"forage":Forage,
-	"drop":Drop
+	"drop":Drop,
+	"pickup":PickUp,
+	"craft":Craft
 }
 
 func RunCommand(cmd, args):
@@ -36,6 +39,10 @@ func Clear(args):
 
 func NewGame(args):
 	Global.gameManager.StartGame(args)
+	pass
+
+func Tutorial(args):
+	Global.gameManager.StartTutorial()
 	pass
 	
 func LoadGame(args):
@@ -110,7 +117,7 @@ func Drop(args):
 		return
 		pass
 		
-	if args.size() == 2: #amount specified
+	if args.size() >= 2: #amount specified
 		
 		if args[1].is_valid_int():
 			var amount:int = int(args[1])
@@ -122,3 +129,45 @@ func Drop(args):
 		Global.itemManager.PlayerDropItem(args[0], 1)
 		
 	pass
+
+func Craft(args):
+	
+	Global.itemManager.Craft(Global.gameManager.player, args[0])
+	pass
+
+func PickUp(args):
+	if args.size() == 0:
+		var position:Vector2 = Global.gameManager.player.position
+		var node:GridNode = Global.gridManager.GetNodeAt(position.x, position.y)
+		if node.items.size() == 0:
+			Global.terminal.PrintRed("There are no items here.")
+			return
+		var item:Item = node.items[0]
+		Global.itemManager.PlayerPickUp(position,item.itemName,1)
+		return
+	
+	if args.size() == 1:
+		var position:Vector2 = Global.gameManager.player.position
+		var node:GridNode = Global.gridManager.GetNodeAt(position.x, position.y)
+		if node.items.size() == 0:
+			Global.terminal.PrintRed("There are no items here.")
+			return
+		Global.itemManager.PlayerPickUp(position,args[0],1)
+		return
+	
+	if args.size() >= 2:
+		var position:Vector2 = Global.gameManager.player.position
+		var node:GridNode = Global.gridManager.GetNodeAt(position.x, position.y)
+		if node.items.size() == 0:
+			Global.terminal.PrintRed("There are no items here.")
+			return
+		if args[1].is_valid_int():
+			var amount:int = int(args[1])
+			Global.itemManager.PlayerPickUp(position,args[0],amount)
+		else:
+			Global.terminal.PrintRed("Use an integer to specify the amount of items to pick up. (e.g. 'pickup Stick 5')")
+			
+		
+	
+	pass
+	

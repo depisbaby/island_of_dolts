@@ -8,7 +8,6 @@ class_name Dolt
 @export var flying:bool
 @export var maxHealth:int
 @export var health:int
-@export var canTakeItems: bool #in kg
 @export var items: Array[Item]
 @export var priorityExhausted: bool
 @export var strength: int

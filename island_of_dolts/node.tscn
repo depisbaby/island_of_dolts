@@ -120,6 +120,7 @@ offset_bottom = 193.0
 scale = Vector2(2, 2)
 
 [node name="Settings" type="CanvasLayer" parent="."]
+visible = false
 script = ExtResource("6_oaeeq")
 
 [node name="base" type="Control" parent="Settings"]
@@ -241,7 +242,7 @@ bus = &"SFX"
 
 [node name="ItemManager" type="Node" parent="."]
 script = ExtResource("23_qv2vy")
-grassItems = Array[String](["Blue Berries", "Worm"])
+grassItems = Array[String](["Berries", "Worm"])
 
 [node name="ActionsManager" type="Node" parent="."]
 script = ExtResource("25_3xwg0")
