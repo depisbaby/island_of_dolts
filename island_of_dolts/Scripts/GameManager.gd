@@ -170,14 +170,14 @@ func Examine(args):
 		return
 	
 	if node.dolt != null && !node.dolt.isPlayer:
-		Global.terminal.PrintWhite(str("There is a ", node.dolt.displayName,".\n"))
+		Global.terminal.PrintWhite(str("There is a ", node.dolt.displayName,"."))
 		pass
 	
 	if node.items.size() > 0:
-		Global.terminal.PrintWhite("\nThere are following items:")
+		Global.terminal.PrintWhite("There are following items:")
 		for item:Item in node.items:
 			Global.terminal.PrintWhite(str("- ", item.amount,"x ",item.itemName))
-		Global.terminal.PrintWhite("\n")
+		#Global.terminal.PrintWhite("\n")
 	
 	if node.block != null:
 		Global.terminal.PrintWhite(str("There is a ", node.block.blockName,"."))

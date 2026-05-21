@@ -85,6 +85,8 @@ theme_override_font_sizes/normal_font_size = 40
 bbcode_enabled = true
 text = "[color=bebe79]          =[Island of Dolts]=
 
+    'tutorial' to start a tutorial.
+
       'new' to start a new game.   
 
     'load [save number]' to load a 

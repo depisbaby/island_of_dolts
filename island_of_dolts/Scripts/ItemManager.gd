@@ -63,7 +63,7 @@ func GetItemOfName(_itemName:String)->Item:
 	return null
 	pass
 
-func GiveItem(dolt:Dolt, itemName:String, amount:int, data:Array[String])-> bool:
+func GiveItem(dolt:Dolt, itemName:String, amount:int, data:Array[int])-> bool:
 	
 	var item:Item = GetItemOfName(itemName)
 	#print(item.itemName)
@@ -71,10 +71,7 @@ func GiveItem(dolt:Dolt, itemName:String, amount:int, data:Array[String])-> bool
 		print(str("There is no item named '", itemName,"'."))
 		push_error()
 	
-	var newItem = item.duplicate()
-	newItem.position = Vector2(-1,-1)
-	newItem.amount = amount
-	newItem.data = data
+	var newItem = CreateNewItem(item,amount,data) 
 	
 	if !PickUpItem(dolt,newItem,amount):
 		newItem.queue_free()
@@ -82,13 +79,6 @@ func GiveItem(dolt:Dolt, itemName:String, amount:int, data:Array[String])-> bool
 	
 	return true
 	
-		#print("new item")
-		
-
-func OnLoadGiveItem(dolt:Dolt, item:Item):
-	dolt.items.push_back(item)
-	items.push_back(item)
-	pass
 
 func PrintInventory(dolt:Dolt):
 	Global.terminal.PrintWhite(str(dolt.displayName, " has the following items:"))
@@ -142,12 +132,8 @@ func PickUpItem(dolt:Dolt, item:Item, amount:int)->bool:
 			Global.terminal.PrintWhite(str("You picked up ", amount, "x ",item.itemName))
 		
 	else: # make a new item
-		var newItem = item.duplicate()
-		newItem.amount = amount
-		newItem.data = item.data
-		newItem.position = Vector2(-1,-1)
+		var newItem = CreateNewItem(item, amount, item.data)
 		dolt.items.push_back(newItem)
-		items.push_back(newItem)
 		if dolt.isPlayer:
 			Global.terminal.PrintWhite(str("You picked up ", amount, "x ",item.itemName))
 		
@@ -156,7 +142,7 @@ func PickUpItem(dolt:Dolt, item:Item, amount:int)->bool:
 	if item.amount <= 0:#did we pick up all?
 		if oldNode != null:
 			oldNode.items.erase(item)
-		item.queue_free()
+		DeleteItem(item)
 	return true
 	
 	pass
@@ -177,9 +163,9 @@ func PlaceItemInWorld(position:Vector2, item:Item)->bool:
 		if _item.itemName == item.itemName:
 			if item.data.size() == 0 && _item.data.size() == 0: #combine with existing
 				_item.amount = _item.amount + item.amount
-				item.queue_free()
 				if oldNode != null:
 					oldNode.items.erase(item)
+				DeleteItem(item)
 				return true
 		
 	node.items.push_front(item)
@@ -211,9 +197,10 @@ func PlayerDropItem(itemName:String, amount:int):
 	else :
 		_amount = amount
 		found.amount = found.amount - _amount
-		var newItem:Item = found.duplicate()
-		newItem.amount = _amount
-		newItem.position = Vector2(-1,-1)
+		
+		var newItem:Item = CreateNewItem(found,_amount,found.data) 
+		#newItem.amount = _amount
+		#newItem.position = Vector2(-1,-1)
 		PlaceItemInWorld(Global.gameManager.player.position, newItem)
 	
 	Global.terminal.PrintWhite(str("You dropped ",_amount,"x ",_itemName))
@@ -279,7 +266,7 @@ func Craft(crafter:Dolt, itemName:String)->bool:
 				item.amount = item.amount - recipe.amountsRequired[i]
 				if item.amount == 0:
 					crafter.items.erase(item)
-					item.queue_free()		
+					DeleteItem(item)		
 		i=i+1
 	
 	GiveItem(crafter, recipe.itemName, recipe.amountCrafted,[])
@@ -288,3 +275,25 @@ func Craft(crafter:Dolt, itemName:String)->bool:
 		Global.terminal.PrintWhite("Crafting...")		
 	
 	return true
+
+func CreateNewItem(original:Item, amount:int, data:Array[int]):
+	var newItem = original.duplicate()
+	newItem.position = Vector2(-1,-1)
+	newItem.amount = amount
+	newItem.data = data
+	items.push_back(newItem)
+	return newItem
+	pass
+
+func DeleteItem(item:Item):
+	items.erase(item)
+	item.queue_free()
+	pass
+
+func SaveWorldItems():
+	for item in items:
+		if item.position != Vector2(-1,-1)
+	pass
+	
+func LoadWorldItems():
+	pass
