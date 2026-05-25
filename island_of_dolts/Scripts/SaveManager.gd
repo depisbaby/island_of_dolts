@@ -63,7 +63,7 @@ func SaveLocalData():
 	saveData.playerName = Global.gameManager.playerName
 	
 	Global.doltsManager.SaveDolts(saveData)
-	
+	Global.itemManager.Save(saveData)
 	
 	pass
 
@@ -71,5 +71,5 @@ func LoadSaveData():
 	Global.gameManager.playerName = saveData.playerName
 	
 	Global.doltsManager.LoadDolts(saveData)
-	
+	Global.itemManager.Load(saveData)
 	pass

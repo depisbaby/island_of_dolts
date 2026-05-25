@@ -10,7 +10,8 @@ class_name SaveData
 @export var playerDoltInGame: PackedScene
 
 #Items
-@export var itemsInGame: Array[PackedScene]
+@export var doltItems: Array[PackedScene]
+@export var worldItems: Array[PackedScene]
 
 #blockchanges
 @export var blockChanges: Array[BlockChange] 

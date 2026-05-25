@@ -66,7 +66,7 @@ func Tutorial():
 	
 func SaveDolts(saveData: SaveData):
 	saveData.aiDoltsInGame.clear()
-	saveData.itemsInGame.clear()
+	saveData.doltItems.clear()
 	var ownerId:int = 0
 	
 	#save player items
@@ -74,7 +74,7 @@ func SaveDolts(saveData: SaveData):
 			item.ownerId = 0
 			var packedItem :PackedScene = PackedScene.new()
 			packedItem.pack(item)
-			saveData.itemsInGame.push_back(packedItem)
+			saveData.doltItems.push_back(packedItem)
 			pass
 	
 	#savae player (dolt)
@@ -90,7 +90,7 @@ func SaveDolts(saveData: SaveData):
 			item.ownerId = ownerId
 			var packedItem :PackedScene = PackedScene.new()
 			packedItem.pack(item)
-			saveData.itemsInGame.push_back(packedItem)
+			saveData.doltItems.push_back(packedItem)
 			pass
 		
 		#save the dolt
@@ -119,7 +119,7 @@ func LoadDolts(saveData: SaveData):
 		dolt.items.clear()
 	
 	#load items of ai and player dolts
-	for _item in saveData.itemsInGame:
+	for _item in saveData.doltItems:
 		var item:Item = _item.instantiate()
 		if item.ownerId == 0:
 			Global.itemManager.OnLoadGiveItem(Global.gameManager.player, item)

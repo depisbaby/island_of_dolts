@@ -154,9 +154,7 @@ func PlaceItemInWorld(position:Vector2, item:Item)->bool:
 	
 	var node:GridNode = Global.gridManager.GetNodeAt(position.x, position.y)
 	if node == null:
-		return false
-	
-	if node.block != null:
+		push_error()
 		return false
 		
 	for _item in node.items:
@@ -177,6 +175,10 @@ func PlaceItemInWorld(position:Vector2, item:Item)->bool:
 	return true
 
 func PlayerDropItem(itemName:String, amount:int):
+	
+	var node :GridNode = Global.gridManager.GetNodeAt(Global.gameManager.player.position.x,Global.gameManager.player.position.y)
+	if node.block != null && !node.block.walkable:
+		Global.terminal.PrintRed("You can't do that.")
 	
 	var found:Item 
 	for item in Global.gameManager.player.items:
@@ -290,10 +292,30 @@ func DeleteItem(item:Item):
 	item.queue_free()
 	pass
 
-func SaveWorldItems():
+func Save(saveData: SaveData):
+	saveData.worldItems.clear()
+	
 	for item in items:
-		if item.position != Vector2(-1,-1)
+		if item.position != Vector2(-1,-1):
+			var packedItem :PackedScene = PackedScene.new()
+			packedItem.pack(item)
+			saveData.worldItems.push_back(packedItem)
+			pass
 	pass
 	
-func LoadWorldItems():
+func Load(saveData: SaveData):
+	
+	for _item in saveData.worldItems:
+		var item:Item = _item.instantiate()
+		OnLoadPlaceItem(item)
 	pass
+
+func OnLoadGiveItem(dolt:Dolt, item:Item):
+	dolt.items.push_back(item)
+	items.push_back(item)
+	pass
+
+func OnLoadPlaceItem(item:Item):
+	items.push_back(item)
+	var node : GridNode = Global.gridManager.GetNodeAt(item.position.x,item.position.y)
+	node.items.push_back(item)
